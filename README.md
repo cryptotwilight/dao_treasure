@@ -3,6 +3,6 @@
 
 This is the repository for the Tresoreria. 
 
-Tresury. It's a difficult topic for any project especially DAOs. The goal of this project is to develop a Web3 treasury management system that enables DAOs to 
-operate more effectively whilst reducing the administrative burden associated with Treasury Management. 
+Safe transparency in Treasury. It is a difficult topic in DAOs or for any Web3 project. The goal of this project is to develop a Web3 treasury management system with a dashboard that enables DAOs to be open about where they make investments and how well their investments perform. The idea is to begin a public good that encourages better governance, 
+and sound risk taking within DAOs using transparently acquired Covalent data. 
 
