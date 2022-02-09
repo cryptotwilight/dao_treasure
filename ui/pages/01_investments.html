@@ -780,7 +780,7 @@
         const currentHoldingsTable = document.getElementById("current_holdings_table");
 
         function findCurrencyLogoPath(currency) {
-            return "../assets/images/currencies/" + currency + ".png";
+            return "../assets/images/currencies/" + currency.toLowerCase() + ".png";
         }
 
         const protocolLogos = {
@@ -792,7 +792,7 @@
         }
 
         function findProtocolLogoPath(protocol) {
-            return "../assets/images/protocols/" + protocolLogos[protocol] + ".png";
+            return "../assets/images/protocols/" + protocolLogos[protocol].toLowerCase() + ".png";
         }
 
 
