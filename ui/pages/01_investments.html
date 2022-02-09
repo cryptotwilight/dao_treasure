@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon" />
+    <title>Tresoreria - Investment Manager</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/lineicons.css" />
+    <link rel="stylesheet" href="../assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js" type="text/javascript"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
+</head>
+
+<body>
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+        <div class="navbar-logo">
+            <a href="../index.html">
+                <img src="../assets/images/logo/logo.svg" alt="Tresoreria" />
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#ddmenu_1" aria-controls="ddmenu_1" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon">
+          <svg width="22" height="22" viewBox="0 0 22 22">
+            <path
+              d="M17.4167 4.58333V6.41667H13.75V4.58333H17.4167ZM8.25 4.58333V10.0833H4.58333V4.58333H8.25ZM17.4167 11.9167V17.4167H13.75V11.9167H17.4167ZM8.25 15.5833V17.4167H4.58333V15.5833H8.25ZM19.25 2.75H11.9167V8.25H19.25V2.75ZM10.0833 2.75H2.75V11.9167H10.0833V2.75ZM19.25 10.0833H11.9167V19.25H19.25V10.0833ZM10.0833 13.75H2.75V19.25H10.0833V13.75Z"
+            />
+          </svg>
+        </span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <ul id="ddmenu_1" class="collapse show dropdown-nav">
+                        <li>
+                            <a href="../index.html" class="active"> Overview </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_2" aria-controls="ddmenu_2" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.8334 1.83325H5.50008C5.01385 1.83325 4.54754 2.02641 4.20372 2.37022C3.8599 2.71404 3.66675 3.18036 3.66675 3.66659V18.3333C3.66675 18.8195 3.8599 19.2858 4.20372 19.6296C4.54754 19.9734 5.01385 20.1666 5.50008 20.1666H16.5001C16.9863 20.1666 17.4526 19.9734 17.7964 19.6296C18.1403 19.2858 18.3334 18.8195 18.3334 18.3333V7.33325L12.8334 1.83325ZM16.5001 18.3333H5.50008V3.66659H11.9167V8.24992H16.5001V18.3333Z"
+            />
+          </svg>
+        </span>
+                        <span class="text">Management</span>
+                    </a>
+                    <ul id="ddmenu_2" class="collapse dropdown-nav">
+                        <li>
+                            <a href="#'"> Investments </a>
+                        </li>
+                        <li>
+                            <a href="02_deposits.html"> Deposits </a>
+                        </li>
+                        <li>
+                            <a href="03_withdrawals.html"> Withdrawals </a>
+                        </li>
+                        <li>
+                    </ul>
+                    </li>
+
+
+                    <span class="divider"><hr /></span>
+
+            </ul>
+        </nav>
+
+    </aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+        <!-- ========== header start ========== -->
+        <header class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-6">
+                        <div class="header-left d-flex align-items-center">
+                            <div class="menu-toggle-btn mr-20">
+                                <button id="menu-toggle" class="main-btn secondary-btn square-btn btn-hover">
+                <i class="lni lni-chevron-left me-2"></i> Menu
+              </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-6">
+                        <div class="header-right">
+                            <!-- web 3 start -->
+                            <div class="menu-toggle-btn mr-20"></div>
+                            <a href="#" id="connect_web_3" rel="nofollow" class="main-btn secondary-btn rounded-md btn-hover">
+                          Connect Web 3                              
+                         
+                        </a>
+                        </div>
+                        <span id="show_wallet"></span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </header>
+        <!-- ========== header end ========== -->
+
+        <!-- ========== section start ========== -->
+        <section class="section">
+            <div class="container-fluid">
+                <!-- ========== title-wrapper start ========== -->
+                <div class="title-wrapper pt-30">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="title mb-30">
+                                <h2>Investments </h2>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-md-6">
+                            <div class="breadcrumb-wrapper mb-30">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a href="#0">Management</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            Investments
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- ========== title-wrapper end ========== -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="icon-card mb-30">
+                            <div class="icon purple">
+                                <i class="lni lni-lock-alt"></i>
+                            </div>
+                            <div class="content">
+                                <h6 class="mb-10">Total value Locked ($)</h6>
+                                <h3 class="text-bold mb-10" id="total_value_locked"></h3>
+                            </div>
+                        </div>
+                        <!-- End Icon Cart -->
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="icon-card mb-30">
+                            <div class="icon success">
+                                <i class="lni lni-dollar"></i>
+                            </div>
+                            <div class="content">
+                                <h6 class="mb-10">Available Balance ($)</h6>
+                                <h3 class="text-bold mb-10" id="available_balance"></h3>
+
+                            </div>
+                        </div>
+                        <!-- End Icon Cart -->
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="icon-card mb-30">
+                            <div class="icon primary">
+                                <i class="lni lni-investment"></i>
+                            </div>
+                            <div class="content">
+                                <h6 class="mb-10">Earnings To Date ($)</h6>
+                                <h3 class="text-bold mb-10" id="earnings_to_date"></h3>
+                            </div>
+                        </div>
+                        <!-- End Icon Cart -->
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="icon-card mb-30">
+                            <div class="icon orange">
+                                <i class="lni lni-grow"></i>
+                            </div>
+                            <div class="content">
+                                <h6 class="mb-10">Capital Growth (%)</h6>
+                                <h3 class="text-bold mb-10" id="earnings_growth"></h3>
+                            </div>
+                        </div>
+                        <!-- End Icon Cart -->
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+
+                <!-- ================================== PROTOCOL DEALS =========================================-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-style mb-30">
+                            <div class="left">
+                                <h6 class="text-medium mb-30">Latest Protocol Deals</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table top-selling-table" id="latest_protocol_deals_table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Protocol</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Market <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    APR/APY <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    TVL <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+                <!-- ================================== PROTOCOL DEALS END  =========================================-->
+
+                <!-- ================================== AVAILABLE BALANCES =========================================-->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-style mb-30">
+                            <div class="left">
+                                <h6 class="text-medium mb-30">Available Balances</h6>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table top-selling-table" id="available_balances_table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Currency</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Balance <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Denominated <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width" colspan="3">
+                                                <h6 class="text-sm text-medium">
+                                                    <center>
+                                                        Swap <i class="lni lni-arrows-vertical"></i></center>
+                                                </h6>
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Row -->
+
+                <!-- ================================== AVAILABLE BALANCES END =========================================-->
+
+                <!-- ================================== CURRENT HOLDINGS =========================================-->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-style mb-30">
+                            <div class="left">
+                                <h6 class="text-medium mb-30">Current Holdings</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table top-selling-table" id="current_holdings_table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Protocol</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Market</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">APR/APY</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Volume</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Denominated (USD)</h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Earnings to Date (ETD)</h6>
+                                            </th>
+                                            <th class="text-sm text-medium">ETD Denominated (USD)</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </div>
+
+            <!-- end container -->
+        </section>
+        <!-- ========== section end ========== -->
+
+        <!-- ========== footer start =========== -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 order-last order-md-first">
+                        <div class="copyright text-center text-md-start">
+                            <p class="text-sm">
+                                Designed and Developed by
+                                <a href="https://www.blockstarlogic.com" rel="nofollow" target="_blank">
+                    Block Star Logic
+                  </a>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end col-->
+                    <div class="col-md-6">
+                        <div class="
+                  terms
+                  d-flex
+                  justify-content-center justify-content-md-end
+                ">
+                            <a href="#0" class="text-sm">Term & Conditions</a>
+                            <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </footer>
+        <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/Chart.min.js"></script>
+    <script src="../assets/js/dynamic-pie-chart.js"></script>
+    <script src="../assets/js/moment.min.js"></script>
+    <script src="../assets/js/fullcalendar.js"></script>
+    <script src="../assets/js/jvectormap.min.js"></script>
+    <script src="../assets/js/world-merc.js"></script>
+    <script src="../assets/js/polyfill.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/ierc20abi.js"></script>
+
+    <script>
+        const iTresoreriaAbi = [{
+            "inputs": [{
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            }, {
+                "internalType": "uint256",
+                "name": "_denominated",
+                "type": "uint256"
+            }, {
+                "internalType": "string",
+                "name": "_currency",
+                "type": "string"
+            }, {
+                "internalType": "address",
+                "name": "_erc20",
+                "type": "address"
+            }],
+            "name": "deposit",
+            "outputs": [{
+                "internalType": "bool",
+                "name": "_deposited",
+                "type": "bool"
+            }],
+            "stateMutability": "payable",
+            "type": "function"
+        }, {
+            "inputs": [{
+                "internalType": "string",
+                "name": "_protocol",
+                "type": "string"
+            }, {
+                "internalType": "string",
+                "name": "_market",
+                "type": "string"
+            }],
+            "name": "exit",
+            "outputs": [{
+                "internalType": "bool",
+                "name": "_liquidated",
+                "type": "bool"
+            }, {
+                "internalType": "string",
+                "name": "_currency",
+                "type": "string"
+            }, {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getApprovedAddresses",
+            "outputs": [{
+                "internalType": "address[]",
+                "name": "_approvedAddress",
+                "type": "address[]"
+            }, {
+                "internalType": "string[]",
+                "name": "_addressName",
+                "type": "string[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getAvailableBalances",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_currency",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_balance",
+                "type": "uint256[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getDepositHistory",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_currency",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_volume",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_denominated",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "depositDate",
+                "type": "uint256[]"
+            }, {
+                "internalType": "address[]",
+                "name": "_payer",
+                "type": "address[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getHoldings",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_protocol",
+                "type": "string[]"
+            }, {
+                "internalType": "string[]",
+                "name": "_market",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_rateYield",
+                "type": "uint256[]"
+            }, {
+                "internalType": "bool[]",
+                "name": "_isAPY",
+                "type": "bool[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_volume",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_earningsToDate",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_initialInvestment",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_investmentDate",
+                "type": "uint256[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getInvestmentHistory",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_protocol",
+                "type": "string[]"
+            }, {
+                "internalType": "string[]",
+                "name": "_market",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_entryDate",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_exitDate",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_entryInvestment",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_entryInvestmentDenominated",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_exitReturn",
+                "type": "uint256[]"
+            }, {
+                "internalType": "string[]",
+                "name": "_exitCurrency",
+                "type": "string[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getLatestDeals",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_protocol",
+                "type": "string[]"
+            }, {
+                "internalType": "string[]",
+                "name": "_market",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_aprapy",
+                "type": "uint256[]"
+            }, {
+                "internalType": "bool[]",
+                "name": "_isAPYs",
+                "type": "bool[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_totalValueLocked",
+                "type": "uint256[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getSwapHistory",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_fromCurrency",
+                "type": "string[]"
+            }, {
+                "internalType": "string[]",
+                "name": "_toCurrency",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_fromCurrencyAmount",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_toCurrencyAmount",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_fromCurrencyAmountDenominated",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_swapDate",
+                "type": "uint256[]"
+            }, {
+                "internalType": "address[]",
+                "name": "_swapper",
+                "type": "address[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [],
+            "name": "getWithdrawalHistory",
+            "outputs": [{
+                "internalType": "string[]",
+                "name": "_currency",
+                "type": "string[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_volume",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_denominated",
+                "type": "uint256[]"
+            }, {
+                "internalType": "uint256[]",
+                "name": "_withdrawalDate",
+                "type": "uint256[]"
+            }, {
+                "internalType": "address[]",
+                "name": "_withdrawer",
+                "type": "address[]"
+            }, {
+                "internalType": "address[]",
+                "name": "_payee",
+                "type": "address[]"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }, {
+            "inputs": [{
+                "internalType": "string",
+                "name": "_protocol",
+                "type": "string"
+            }, {
+                "internalType": "string",
+                "name": "_market",
+                "type": "string"
+            }, {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            }, {
+                "internalType": "uint256",
+                "name": "_denominated",
+                "type": "uint256"
+            }, {
+                "internalType": "string",
+                "name": "_currency",
+                "type": "string"
+            }, {
+                "internalType": "address",
+                "name": "_erc20",
+                "type": "address"
+            }],
+            "name": "invest",
+            "outputs": [{
+                "internalType": "bool",
+                "name": "_invested",
+                "type": "bool"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }, {
+            "inputs": [{
+                "internalType": "address",
+                "name": "_fromCurrency",
+                "type": "address"
+            }, {
+                "internalType": "address",
+                "name": "_toCurrency",
+                "type": "address"
+            }, {
+                "internalType": "uint256",
+                "name": "_fromDenominated",
+                "type": "uint256"
+            }, {
+                "internalType": "uint256",
+                "name": "_fromCurrencyAmount",
+                "type": "uint256"
+            }],
+            "name": "swap",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "_toCurrencyAmount",
+                "type": "uint256"
+            }],
+            "stateMutability": "payable",
+            "type": "function"
+        }, {
+            "inputs": [{
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            }, {
+                "internalType": "uint256",
+                "name": "_denominated",
+                "type": "uint256"
+            }, {
+                "internalType": "string",
+                "name": "_currency",
+                "type": "string"
+            }, {
+                "internalType": "address",
+                "name": "_erc20",
+                "type": "address"
+            }, {
+                "internalType": "address payable",
+                "name": "_payee",
+                "type": "address"
+            }],
+            "name": "withdraw",
+            "outputs": [{
+                "internalType": "bool",
+                "name": "_withdrawn",
+                "type": "bool"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }];
+    </script>
+    <script>
+        const latestDealTable = document.getElementById("latest_protocol_deals_table");
+        const availableBalancesTable = document.getElementById("available_balances_table");
+        const currentHoldingsTable = document.getElementById("current_holdings_table");
+
+        function findCurrencyLogoPath(currency) {
+            return "../assets/images/currencies/" + currency + ".png";
+        }
+
+        const protocolLogos = {
+            "Protocol Stub": "compound-comp-logo",
+            "compound": "compound-comp-logo",
+            "aave": "aave-aave-logo",
+            "curve": "curve-dao-token-crv-logo",
+            "sushi": "sushiswap-sushi-logo"
+        }
+
+        function findProtocolLogoPath(protocol) {
+            return "../assets/images/protocols/" + protocolLogos[protocol] + ".png";
+        }
+
+
+        const currencies = {
+            "AAVE": "Aave Token",
+            "ETH": "Ethereum",
+            "USDC": "USD Coin",
+            "USDT": "Tether USD",
+            "DAI": "Multi Collateral DAI"
+        };
+
+        function findCurrencyName(currency) {
+            return currencies[currency];
+        }
+
+        function findMarketName(market) {
+            return currencies[market];
+        }
+
+
+        const protocols = {
+            "Protocol Stub": "Compound",
+            "compound": "Compound",
+            "aave": "Aave",
+            "sushi": "Sushi Swap"
+        };
+
+        function findProtocolName(protocol) {
+            return protocols[protocol];
+        }
+
+        function findMarketLogoPath(market) {
+            return "../assets/images/currencies/" + market + ".png";
+        }
+
+        function addLatestDeal(protocol, market, aprapy, isApy, tvl) {
+            var row = latestDealTable.insertRow();
+            // ====== protocol 
+            var protocolCell = row.insertCell();
+            var protocolLogoPath = findProtocolLogoPath(protocol);
+
+            var protocolName = findProtocolName(protocol);
+
+            var protocolHolderDiv = createDiv("product");
+            protocolCell.appendChild(protocolHolderDiv);
+
+            var protocolLogo = document.createElement("img");
+            protocolLogo.setAttribute("src", protocolLogoPath);
+            protocolLogo.setAttribute("alt", protocolName);
+            var protocolLogoDiv = createDiv("image");
+            protocolLogoDiv.appendChild(protocolLogo);
+
+            var protocolNameP = createP();
+            var protocolNameTxt = document.createTextNode(protocolName);
+            protocolNameP.appendChild(protocolNameTxt);
+            protocolHolderDiv.appendChild(protocolLogoDiv);
+            protocolHolderDiv.appendChild(protocolNameP);
+            // ====== end protocol 
+
+            // ====== market
+            var marketCell = row.insertCell();
+            var marketLogoPath = findMarketLogoPath(market);
+            var marketHolderDiv = createDiv("product");
+            marketCell.appendChild(marketHolderDiv);
+
+            var marketLogo = document.createElement("img");
+            marketLogo.setAttribute("src", marketLogoPath);
+            marketLogo.setAttribute("alt", market);
+            var marketLogoDiv = createDiv("image");
+            marketLogoDiv.appendChild(marketLogo);
+
+            var marketNameP = createP();
+            var marketName = findMarketName(market);
+            var marketNameTxt = document.createTextNode(marketName);
+            marketNameP.appendChild(marketNameTxt);
+
+            marketHolderDiv.appendChild(marketLogoDiv);
+            marketHolderDiv.appendChild(marketNameP);
+            // ======= end market
+
+            // ===== apy
+            var aprApyCell = row.insertCell();
+            var aprApyP = createP();
+            var aprApyDispTxt;
+            if (isApy) {
+                aprApyDispTxt = aprapy + "% APY";
+            } else {
+                aprApyDispTxt = aprapy + "% APR";
+            }
+            var aprApyTxt = document.createTextNode(aprApyDispTxt);
+            aprApyP.appendChild(aprApyTxt);
+            aprApyCell.appendChild(aprApyP);
+
+            // ====== volume
+            var totalValueLockedCell = row.insertCell();
+            var totalValueLockedS = createSpan("status-btn success-btn");
+            var totalValueLockedTxt = document.createTextNode(tvl);
+            totalValueLockedS.appendChild(totalValueLockedTxt);
+            totalValueLockedCell.appendChild(totalValueLockedS);
+
+            // =====  invest input 
+            var inputCell = row.insertCell();
+            var investDiv = createDiv("input-style-1");
+            var input = document.createElement("input");
+            input.setAttribute("type", "text");
+            input.setAttribute("placeholder", "enter amount to invest ...");
+            var idTxt = "id=" + protocol + "_" + market + "invest_amount";
+            input.setAttribute("id", idTxt);
+            investDiv.appendChild(input);
+            inputCell.appendChild(investDiv);
+
+            // ======= invest currency to 
+            var investCurrencyCell = row.insertCell();
+            var holderDiv = createDiv("select-style-1");
+            var selectDiv = createDiv("select-position");
+            holderDiv.appendChild(selectDiv);
+            var select = document.createElement("select");
+            var selectId = protocol + "_" + market + "_invest_currency";
+            select.setAttribute("id", selectId);
+            addOptions(select, supportedCurrencies);
+            selectDiv.appendChild(select);
+            investCurrencyCell.appendChild(holderDiv);
+
+            // ======== swap 
+            var investCell = row.insertCell();
+            investCell.setAttribute("style", "vertical-align: text-top;");
+            var investP = createP();
+            var investLink = document.createElement("a");
+
+            investLink.setAttribute("href", "#");
+            investLink.setAttribute("class", "main-btn danger-btn-outline rounded-md btn-hover");
+            investLink.setAttribute("onclick", "invest(" + market + "," + idTxt + "," + selectId + ")");
+
+            var investLinkTxt = document.createTextNode("invest");
+            investLink.appendChild(investLinkTxt);
+            investP.appendChild(investLink);
+            investCell.appendChild(investP);
+
+        }
+
+        const supportedCurrencies = ["USDC", "ETH", "DAI", "USDT"];
+
+        function addAvailableBalance(currency, balance) {
+            var row = availableBalancesTable.insertRow();
+
+            var currencyCell = row.insertCell();
+
+            var currencyLogoPath = findCurrencyLogoPath(currency);
+            var currencyHolderDiv = createDiv("product");
+            currencyCell.appendChild(currencyHolderDiv);
+
+            var currencyLogo = document.createElement("img");
+            currencyLogo.setAttribute("src", currencyLogoPath);
+            currencyLogo.setAttribute("alt", currency);
+            var currencyLogoDiv = createDiv("image");
+            currencyLogoDiv.appendChild(currencyLogo);
+
+            var currencyNameP = createP();
+            var currencyName = findCurrencyName(currency);
+            var currencyNameTxt = document.createTextNode(currencyName);
+            currencyNameP.appendChild(currencyNameTxt);
+
+            currencyHolderDiv.appendChild(currencyLogoDiv);
+            currencyHolderDiv.appendChild(currencyNameP);
+
+            // =========== balance
+
+            var balanceCell = row.insertCell();
+
+            var balanceP = createP();
+            var balanceTxt = document.createTextNode(balance);
+            balanceP.appendChild(balanceTxt);
+            balanceCell.appendChild(balanceP);
+
+            // =========== balance denominated
+
+            var denominatedCell = row.insertCell();
+            var denominatedP = createP();
+            denominatedCell.appendChild(denominatedP);
+            fetchPriceAndMultiply(currency, denominatedP, balance)
+
+            // =====  swap input 
+            var inputCell = row.insertCell();
+            var swapDiv = createDiv("input-style-1");
+            var input = document.createElement("input");
+            input.setAttribute("type", "text");
+            input.setAttribute("placeholder", "enter amount to swap ...");
+            var idTxt = "id=swap_from_" + currency;
+            input.setAttribute("id", idTxt);
+            swapDiv.appendChild(input);
+            inputCell.appendChild(swapDiv);
+
+            // ======= swap to 
+            var swapToCell = row.insertCell();
+            var holderDiv = createDiv("select-style-1");
+            var selectDiv = createDiv("select-position");
+            holderDiv.appendChild(selectDiv);
+            var select = document.createElement("select");
+            var selectId = currency + "_swap_to";
+            select.setAttribute("id", selectId);
+            addOptions(select, supportedCurrencies);
+            selectDiv.appendChild(select);
+            swapToCell.appendChild(holderDiv);
+
+            // ======== swap 
+            var swapCell = row.insertCell();
+            swapCell.setAttribute("style", "vertical-align: text-top;");
+            var swapP = createP();
+            var swapLink = document.createElement("a");
+
+            swapLink.setAttribute("href", "#");
+            swapLink.setAttribute("class", "main-btn warning-btn-outline rounded-md btn-hover");
+            swapLink.setAttribute("onclick", "swap(" + currency + "," + idTxt + "," + selectId + ")");
+
+            var swapLinkTxt = document.createTextNode("swap");
+            swapLink.appendChild(swapLinkTxt);
+            swapP.appendChild(swapLink);
+            swapCell.appendChild(swapP);
+        }
+
+        function addCurrentHolding(protocol, market, aprapy, isApy, volume, earningsToDate) {
+            var row = currentHoldingsTable.insertRow();
+
+            var spacer = row.insertCell();
+
+            // ====== protocol 
+            var protocolCell = row.insertCell();
+            var protocolLogoPath = findProtocolLogoPath(protocol);
+
+            var protocolName = findProtocolName(protocol);
+
+            var protocolHolderDiv = createDiv("product");
+            protocolCell.appendChild(protocolHolderDiv);
+
+            var protocolLogo = document.createElement("img");
+            protocolLogo.setAttribute("src", protocolLogoPath);
+            protocolLogo.setAttribute("alt", protocolName);
+            var protocolLogoDiv = createDiv("image");
+            protocolLogoDiv.appendChild(protocolLogo);
+
+            var protocolNameP = createP();
+            var protocolNameTxt = document.createTextNode(protocolName);
+            protocolNameP.appendChild(protocolNameTxt);
+            protocolHolderDiv.appendChild(protocolLogoDiv);
+            protocolHolderDiv.appendChild(protocolNameP);
+            // ====== end protocol 
+
+            // ====== market
+            var marketCell = row.insertCell();
+            var marketLogoPath = findMarketLogoPath(market);
+            var marketHolderDiv = createDiv("product");
+            marketCell.appendChild(marketHolderDiv);
+
+            var marketLogo = document.createElement("img");
+            marketLogo.setAttribute("src", marketLogoPath);
+            marketLogo.setAttribute("alt", market);
+            var marketLogoDiv = createDiv("image");
+            marketLogoDiv.appendChild(marketLogo);
+
+            var marketNameP = createP();
+            var marketName = findMarketName(market);
+            var marketNameTxt = document.createTextNode(marketName);
+            marketNameP.appendChild(marketNameTxt);
+
+            marketHolderDiv.appendChild(marketLogoDiv);
+            marketHolderDiv.appendChild(marketNameP);
+            // ======= end market
+
+            // ===== apy
+            var aprApyCell = row.insertCell();
+            var aprApyP = createP();
+            var aprApyDispTxt;
+            if (isApy) {
+                aprApyDispTxt = aprapy + "% APY";
+            } else {
+                aprApyDispTxt = aprapy + "% APR";
+            }
+            var aprApyTxt = document.createTextNode(aprApyDispTxt);
+            aprApyP.appendChild(aprApyTxt);
+            aprApyCell.appendChild(aprApyP);
+
+            // ====== volume
+            var volumeCell = row.insertCell();
+            var volumeP = createP();
+            var volumeTxt = document.createTextNode(volume);
+            volumeP.appendChild(volumeTxt);
+            volumeCell.appendChild(volumeP);
+
+            var denominatedCell = row.insertCell();
+            var denominatedP = createP();
+            denominatedCell.appendChild(denominatedP);
+            fetchPriceAndMultiply(market, denominatedP, volume)
+
+            // ===== earnings to date
+            var earningsToDateCell = row.insertCell();
+            var earningsToDateP = createP();
+            var earningsToDateTxt = document.createTextNode(earningsToDate);
+            earningsToDateP.appendChild(earningsToDateTxt);
+            earningsToDateCell.append(earningsToDateP);
+
+            var etdDenominatedCell = row.insertCell()
+            var earningsToDateDenominatedP = createP();
+            etdDenominatedCell.appendChild(earningsToDateDenominatedP);
+
+            fetchPriceAndMultiply(market, earningsToDateDenominatedP, earningsToDate);
+
+            // ========= exit cell 
+            var exitCell = row.insertCell();
+            var exitP = createP();
+            var exitLink = document.createElement("a");
+            exitLink.setAttribute("href", "#");
+            exitLink.setAttribute("class", "main-btn danger-btn-outline rounded-md btn-hover");
+            exitLink.setAttribute("onclick", "exit(" + market + ")");
+            var exitLinkTxt = document.createTextNode("exit market");
+            exitLink.appendChild(exitLinkTxt);
+            exitP.appendChild(exitLink);
+            exitCell.appendChild(exitP);
+
+        }
+
+        function createDiv(classNam) {
+            var div = document.createElement("div");
+            div.setAttribute("class", classNam);
+            return div;
+        }
+
+        function createP() {
+            var p = document.createElement("p");
+            p.setAttribute("class", "text-sm");
+            return p;
+        }
+
+        function createSpan(classDef) {
+            var span = document.createElement("span");
+            span.setAttribute("class", classDef);
+            return span;
+        }
+
+        function addOptions(select, supporedCurrencies) {
+            for (var x = 0; x < supporedCurrencies.length; x++) {
+                var currency = supporedCurrencies[x];
+                var option = document.createElement("option");
+                option.setAttribute("value", currency);
+                var optionTxt = document.createTextNode(currency)
+                option.append(optionTxt);
+                select.appendChild(option);
+            }
+        }
+    </script>
+    <script>
+        const totalValueLocked = document.getElementById("total_value_locked");
+
+        const availableBalance = document.getElementById("available_balance");
+
+        const earningsToDate = document.getElementById("earnings_to_date");
+
+        const earningsGrowth = document.getElementById("earnings_growth");
+
+        async function updateStats() { 
+            console.log(" updating stats ... ");
+            tresoreriaContract.methods.getHoldings().call({from : account})
+            .then(function(response){
+                console.log(response);
+                var protocols = response._protocol; 
+                var markets = response._market; 
+                var volume = response._volume; 
+                var etd = response._earningsToDate; 
+
+                for(var x = 0; x < protocols.length; x++) {
+                    var currency = markets[x];
+                    var amount = volume[x];
+                    fetchAndMultiplyAndSum(currency, amount, totalValueLocked);
+                    fetchAndMultiplyAndSum(currency, etd, earningsToDate);
+                }
+            })
+            .catch(function (err){
+                console.log(err);
+            });
+            console.log("get available balances " );
+            tresoreriaContract.methods.getAvailableBalances().call({from : account})
+            .then(function(response){
+                console.log(response);
+                var currencies = response._currency; 
+                var balances = response._balance; 
+
+                for(var x = 0; x < currencies.length; x++) {
+                    var currency = currencies[x];
+                    var amount = balances[x];
+                    console.log( " available balance " + amount + " currency " + currency);
+                    fetchAndMultiplyAndSum(currency, amount, availableBalance);                
+                }
+            })
+            .catch(function (err){
+                console.log(err);
+            });            
+        }
+       
+        function updateCapitalGrowth() { 
+            var tvl = Number(totalValueLocked.textContent);
+            var ab = Number (availableBalance.textContent);
+            var etd = Number(earningsToDate.textContent);
+
+            var eg = ( etd / (ab + tvl) ) * 100;
+
+            earningsGrowth.innerHTML = eg + "%";
+        }
+
+      async function fetchAndMultiplyAndSum(currency, amount, variable){
+            var url = "https://api.covalenthq.com/v1/pricing/tickers/?tickers=" + currency + "&quote-currency=USD&format=JSON&key=ckey_43370c93a0914e429ae00eca81d";
+            fetch(url).then(function(response) {
+                    respData = response.json();
+                    console.log("response data :- ");
+                    console.log(respData);
+                    return respData
+                })
+                .then(function(data) {
+                    console.log("processing data");
+                    console.log(data.data);
+                    var price = data.data.items[0].quote_rate * inboundNumber(amount);
+                    console.log("price: " + price);
+                    var total = Number(variable.textContent);
+                    variable.textContent = ""; 
+                    console.log("total : " + total);
+                    total += price;                    
+                    variable.textContent = total;
+                    updateCapitalGrowth();
+                    return price;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                }); 
+        }
+
+    </script>
+
+    <script>
+        var account;
+
+        const onboardButton = document.getElementById("connect_web_3");
+        const showWallet = document.getElementById("show_wallet");
+
+        const web3 = new Web3(window.ethereum);
+        const tresoreriaAddress = "0x85B589d0D43977A80d58Cf9536B7Eba9Fb580398";
+
+        const tresoreriaContract = new web3.eth.Contract(iTresoreriaAbi, tresoreriaAddress);
+
+        //Created check function to see if the MetaMask extension is installed
+        const isMetaMaskInstalled = () => {
+
+            const {
+                ethereum
+            } = window;
+            return Boolean(ethereum && ethereum.isMetaMask);
+        };
+
+        const MetaMaskClientCheck = () => {
+            //Now we check to see if Metmask is installed
+            if (!isMetaMaskInstalled()) {
+                console.log("metamask not installed");
+                //If it isn't installed we ask the user to click to install it
+                onboardButton.innerText = 'Click here to install MetaMask!';
+                //When the button is clicked we call this function
+                onboardButton.onclick = onClickInstall;
+                //The button is now disabled
+                onboardButton.disabled = false;
+            } else {
+                //If it is installed we change our button text
+                onboardButton.innerText = 'Click to Connect Metamask';
+                console.log("metamask installed");
+                onboardButton.addEventListener('click', () => {
+                    getAccount();
+                    onboardButton.innerText = "Web 3 Connected";
+                });
+            }
+        };
+
+        const initialize = () => {
+            MetaMaskClientCheck();
+        };
+
+        window.addEventListener('DOMContentLoaded', initialize);
+
+        async function getAccount() {
+            const accounts = await ethereum.request({
+                method: 'eth_requestAccounts'
+            });
+            account = accounts[0];
+            showWallet.innerHTML = "<b>Connected Wallet :: " + account + "</b>";
+
+            getCurrentHoldings();
+            getAvailableBalances();
+            getLatestDeals();
+            updateStats();
+           
+        }
+
+        //We create a new MetaMask onboarding object to use in our app
+        //const onboarding = new MetaMaskOnboarding({ forwarderOrigin });
+
+        //This will start the onboarding proccess
+        const onClickInstall = () => {
+            onboardButton.innerText = 'Onboarding in progress';
+            onboardButton.disabled = true;
+            //On this object we have startOnboarding which will start the onboarding process for our end user
+            onboarding.startOnboarding();
+        };
+
+        const onClickConnect = async() => {
+            try {
+                // Will open the MetaMask UI
+                // You should disable this button while the request is pending!
+                await ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+
+
+        async function fetchPriceAndMultiply(currency, node, amount) {
+            var url = "https://api.covalenthq.com/v1/pricing/tickers/?tickers=" + currency + "&quote-currency=USD&format=JSON&key=ckey_43370c93a0914e429ae00eca81d";
+            fetch(url).then(function(response) {
+                    respData = response.json();
+                    console.log("response data :- ");
+                    console.log(respData);
+                    return respData
+                })
+                .then(function(data) {
+                    console.log("processing data");
+                    console.log(data.data);
+                    var price = "( " + (data.data.items[0].quote_rate * amount) + " )";
+                    console.log("price: " + price);
+                    var priceTxt = document.createTextNode(price);
+                    node.appendChild(priceTxt);
+                    return price;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+
+        async function fetchPrice(currency, node) {
+            var url = "https://api.covalenthq.com/v1/pricing/tickers/?tickers=" + currency + "&quote-currency=USD&format=JSON&key=ckey_43370c93a0914e429ae00eca81d";
+            fetch(url).then(function(response) {
+                    respData = response.json();
+                    console.log("response data :- ");
+                    console.log(respData);
+                    return respData
+                })
+                .then(function(data) {
+                    node.innerHTML = "";
+                    console.log("processing data");
+                    console.log(data.data);
+                    var price = "" + data.data.items[0].quote_rate + "";
+                    console.log("price: " + price);
+                    var priceTxt = document.createTextNode(price);
+                    node.appendChild(priceTxt);
+                    return price;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+    </script>
+
+    <script>
+        function outboundNumber(num) {
+            return (num * 1e18);
+        }
+
+        function inboundNumber(num) {
+            return num / 1e18;
+        }
+
+        function toString(num) {
+            return num + "";
+        }
+
+        function refreshAvailableBalances() {
+
+        }
+
+
+        function refreshHoldings() {
+
+        }
+
+
+        
+        async function getAvailableBalances() {
+            tresoreriaContract.methods.getAvailableBalances().call({
+                    from: account
+                })
+                .then(function(response) {
+                    console.log(" getting response");
+                    console.log(response);
+                    var currencies = response._currency;
+                    var balances = response._balance;
+                    for (var x = 0; x < currencies.length; x++) {
+                        var currency = currencies[x];
+                        var balance = inboundNumber(balances[x]);                        
+                        addAvailableBalance(currency, balance);
+                    }                    
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+
+        }
+
+        async function getCurrentHoldings() {
+
+            tresoreriaContract.methods.getHoldings().call({
+                    from: account
+                })
+                .then(function(response) {
+                    console.log(response);
+                    var protocols = response._protocol;
+                    var markets = response._market;
+                    var rateYield = response._rateYield;
+                    var isApy = response._isAPY;
+                    var volume = response._volume;
+                    var earnings = response._earningsToDate;
+                    var initialInvestment = response._initialInvestment;
+                    var investmentDate = response._investmentDate;
+                    for (var x = 0; x < protocols.length; x++) {
+                        console.log("protocol : " + protocols[x]);
+                        addCurrentHolding(protocols[x], markets[x], rateYield[x], isApy[x], inboundNumber(volume[x]), inboundNumber(earnings[x]));
+                    }
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });;
+        }
+
+        async function getLatestDeals() {
+
+            tresoreriaContract.methods.getLatestDeals().call({
+                    from: account
+                })
+                .then(function(response) {
+                    console.log(response);
+                    var protocols = response._protocol;
+                    var markets = response._market;
+                    var rateYield = response._aprapy;
+                    var isApy = response._isAPYs;
+                    var totalValueLocked = response._totalValueLocked;
+
+                    for (var x = 0; x < protocols.length; x++) {
+                        addLatestDeal(protocols[x], markets[x], rateYield[x], isApy[x], inboundNumber(totalValueLocked[x]));
+                    }
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+
+
+        }
+
+        async function getSwapHistory() {
+
+
+        }
+    </script>
+
+</body>
+
+</html>

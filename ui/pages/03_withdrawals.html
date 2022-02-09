@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon" />
+    <title>Tresoreria - Withdrawals Manager</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/lineicons.css" />
+    <link rel="stylesheet" href="../assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js" type="text/javascript"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
+</head>
+
+<body>
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+        <div class="navbar-logo">
+            <a href="../index.html">
+                <img src="../assets/images/logo/logo.svg" alt="Tresoreria" />
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" data-bs-toggle="collapse" data-bs-target="#ddmenu_1" aria-controls="ddmenu_1" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon">
+              <svg width="22" height="22" viewBox="0 0 22 22">
+                <path
+                  d="M17.4167 4.58333V6.41667H13.75V4.58333H17.4167ZM8.25 4.58333V10.0833H4.58333V4.58333H8.25ZM17.4167 11.9167V17.4167H13.75V11.9167H17.4167ZM8.25 15.5833V17.4167H4.58333V15.5833H8.25ZM19.25 2.75H11.9167V8.25H19.25V2.75ZM10.0833 2.75H2.75V11.9167H10.0833V2.75ZM19.25 10.0833H11.9167V19.25H19.25V10.0833ZM10.0833 13.75H2.75V19.25H10.0833V13.75Z"
+                />
+              </svg>
+            </span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <ul id="ddmenu_1" class="collapse show dropdown-nav">
+                        <li>
+                            <a href="../index.html" class="active"> Overview </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-children">
+                    <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_2" aria-controls="ddmenu_2" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.8334 1.83325H5.50008C5.01385 1.83325 4.54754 2.02641 4.20372 2.37022C3.8599 2.71404 3.66675 3.18036 3.66675 3.66659V18.3333C3.66675 18.8195 3.8599 19.2858 4.20372 19.6296C4.54754 19.9734 5.01385 20.1666 5.50008 20.1666H16.5001C16.9863 20.1666 17.4526 19.9734 17.7964 19.6296C18.1403 19.2858 18.3334 18.8195 18.3334 18.3333V7.33325L12.8334 1.83325ZM16.5001 18.3333H5.50008V3.66659H11.9167V8.24992H16.5001V18.3333Z"
+                />
+              </svg>
+            </span>
+                        <span class="text">Management</span>
+                    </a>
+                    <ul id="ddmenu_2" class="collapse dropdown-nav">
+                        <li>
+                            <a href="01_investments.html"> Investments </a>
+                        </li>
+                        <li>
+                            <a href="02_deposits.html"> Deposits </a>
+                        </li>
+                        <li>
+                            <a href="#"> Withdrawals </a>
+                        </li>
+                        <li>
+                    </ul>
+                    </li>
+
+
+                    <span class="divider"><hr /></span>
+
+            </ul>
+        </nav>
+
+    </aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+        <!-- ========== header start ========== -->
+        <header class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-6">
+                        <div class="header-left d-flex align-items-center">
+                            <div class="menu-toggle-btn mr-20">
+                                <button id="menu-toggle" class="main-btn secondary-btn square-btn btn-hover">
+                  <i class="lni lni-chevron-left me-2"></i> Menu
+                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-6">
+                        <div class="header-right">
+                            <!-- web 3 start -->
+                            <div class="menu-toggle-btn mr-20"></div>
+                            <a href="#" id="connect_web_3" rel="nofollow" class="main-btn secondary-btn rounded-md btn-hover">
+                            Connect Web 3                              
+                           
+                          </a>
+                        </div>
+                        <span id="show_wallet"></span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </header>
+        <!-- ========== header end ========== -->
+
+        <!-- ========== section start ========== -->
+        <section class="section">
+            <div class="container-fluid">
+                <!-- ========== title-wrapper start ========== -->
+                <div class="title-wrapper pt-30">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="title mb-30">
+                                <h2>Withdrawals Manager</h2>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-md-6">
+                            <div class="breadcrumb-wrapper mb-30">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a href="#0">Management</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            Withdrawals
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- ========== title-wrapper end ========== -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-xl-6 col-lg-4 col-sm-6">
+                        <div class="icon-card mb-30">
+                            <center>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="input-style-1">
+                                                <label>Withdrawal Amount </label>
+                                                <input type="text" placeholder="Enter withdrawal amount ..." id="withdrawal_amount" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td> 
+                                        <td>
+                                            <div class="select-style-1">
+                                                <label>Withdrawal Currency </label>
+                                                <div class="select-position">
+                                                    <select id="withdraw_currency_select" onclick="switchCurrency()">
+                                                      <option value="NONE">Select Currency</option>
+                                                      <option value="USDC">USDC</option>
+                                                      <option value="ETH">ETH</option>
+                                                      <option value="DAI">DAI</option>
+                                                      <option value="USDT">USDT</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            &nbsp;USD $<span id="withdrawal_total_denominated">0.00000</span>&nbsp;
+                                        </td>
+                                        <td>
+                                            <div class="input-style-1">
+                                                <label>Withdrawal Address </label>
+                                                <input type="text" placeholder="Enter withdrawal address 0x ..." id="withdrawal_address" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            <a href="#" id="withdraw_button" rel="nofollow" class="main-btn secondary-btn rounded-md btn-hover">Withdraw</a>
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                      <td></td>
+                                      <td></td>
+                                      <td><center>Rate: <span id="withdrawal_currency_exchange_rate">$0.00</span></center></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+                                </table>
+                            </center>
+
+                        </div>
+                        <!-- End Icon Cart -->
+                    </div>
+                    <!-- End Col -->
+
+
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-style mb-30">
+                            <div class="left">
+                                <h6 class="text-medium mb-30">Available Balances</h6>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table top-selling-table" id="available_balances_table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Currency</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Balance <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Denominated <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Row -->
+
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card-style mb-30">
+                            <div class="
+            title
+            d-flex
+            flex-wrap
+            justify-content-between
+            align-items-center
+          ">
+                                <div class="left">
+                                    <h6 class="text-medium mb-30">Withdrawal History</h6>
+                                </div>
+
+                            </div>
+                            <!-- End Title -->
+                            <div class="table-responsive" >
+                                <table class="table top-selling-table" id="withdrawal_history_table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Currency</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Amount</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Denominated</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Date</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Withdrawer</h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Payee Address</h6>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- ========== section end ========== -->
+
+        <!-- ========== footer start =========== -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 order-last order-md-first">
+                        <div class="copyright text-center text-md-start">
+                            <p class="text-sm">
+                                Designed and Developed by
+                                <a href="https://www.blockstarlogic.com" rel="nofollow" target="_blank">
+      Block Star Logic
+    </a>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end col-->
+                    <div class="col-md-6">
+                        <div class="
+                  terms
+                  d-flex
+                  justify-content-center justify-content-md-end
+                ">
+                            <a href="#0" class="text-sm">Term & Conditions</a>
+                            <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </footer>
+        <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/Chart.min.js"></script>
+    <script src="../assets/js/dynamic-pie-chart.js"></script>
+    <script src="../assets/js/moment.min.js"></script>
+    <script src="../assets/js/fullcalendar.js"></script>
+    <script src="../assets/js/jvectormap.min.js"></script>
+    <script src="../assets/js/world-merc.js"></script>
+    <script src="../assets/js/polyfill.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/ierc20abi.js"></script>
+
+    <script>
+      const iTresoreriaAbi = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_denominated",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_currency",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_erc20",
+				"type": "address"
+			}
+		],
+		"name": "deposit",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_deposited",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_protocol",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_market",
+				"type": "string"
+			}
+		],
+		"name": "exit",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_liquidated",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "_currency",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getApprovedAddresses",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "_approvedAddress",
+				"type": "address[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_addressName",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAvailableBalances",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_currency",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_balance",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getDepositHistory",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_currency",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_volume",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_denominated",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "depositDate",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "_payer",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getHoldings",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_protocol",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_market",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_rateYield",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "_isAPY",
+				"type": "bool[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_volume",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_earningsToDate",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_initialInvestment",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_investmentDate",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getInvestmentHistory",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_protocol",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_market",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_entryDate",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_exitDate",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_entryInvestment",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_entryInvestmentDenominated",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_exitReturn",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_exitCurrency",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLatestDeals",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_protocol",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_market",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_aprapy",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "_isAPYs",
+				"type": "bool[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_totalValueLocked",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getSwapHistory",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_fromCurrency",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_toCurrency",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_fromCurrencyAmount",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_toCurrencyAmount",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_fromCurrencyAmountDenominated",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_swapDate",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "_swapper",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getWithdrawalHistory",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "_currency",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_volume",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_denominated",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_withdrawalDate",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "_withdrawer",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "_payee",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_protocol",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_market",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_denominated",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_currency",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_erc20",
+				"type": "address"
+			}
+		],
+		"name": "invest",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_invested",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_fromCurrency",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_toCurrency",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fromDenominated",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fromCurrencyAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "swap",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "_toCurrencyAmount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_denominated",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_currency",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_erc20",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_payee",
+				"type": "address"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_withdrawn",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];
+  </script>
+
+    <script>
+
+      const availableBalancesTable = document.getElementById("available_balances_table");
+      const withdrawalHistoryTable = document.getElementById("withdrawal_history_table");
+
+      const withdrawButton = document.getElementById("withdraw_button");
+      withdrawButton.setAttribute("onclick","withdraw()");
+      const withdrawalAddress = document.getElementById("withdrawal_address");
+
+      const withdrawalTotalDenominated = document.getElementById("withdrawal_total_denominated");
+      const withdrawalCurrencySelect = document.getElementById("withdraw_currency_select");
+
+      const withdrawalAmount = document.getElementById("withdrawal_amount");
+      const withdrawalCurrencyExchangeRate = document.getElementById("withdrawal_currency_exchange_rate");
+        
+      async function switchCurrency() { 
+        var selectedWithdrawalCurrency = withdrawalCurrencySelect.value; 
+        if(selectedWithdrawalCurrency == 'NONE') {
+          return null; 
+        }
+        var amountToWithdraw = withdrawalAmount.value; 
+        if(amountToWithdraw <= 0) {
+          return null;
+        }
+
+        fetchPrice(selectedWithdrawalCurrency, withdrawalCurrencyExchangeRate);
+        fetchPriceAndMultiply(selectedWithdrawalCurrency, withdrawalTotalDenominated, amountToWithdraw);
+
+      }      
+
+      function findLogoPath(currency){
+        return "../assets/images/currencies/"+currency.toLowerCase()+".png"; 
+      }
+      const currencies = { "AAVE":"Aave Token","ETH" : "Ethereum", "USDC" : "USD Coin", "USDT": "Tether USD", "DAI" : "Multi Collateral DAI" };
+      function findCurrencyName(currency) {
+        return currencies[currency];
+      }
+
+      function createDiv(classNam) {
+        var div = document.createElement("div");
+        div.setAttribute("class", classNam);
+        return div; 
+      }
+
+      function createP(){
+        var p = document.createElement("p");
+        p.setAttribute("class","text-sm");
+        return p; 
+      }
+
+      function formatDate(date ){
+            return new Date(date*1000).toISOString();
+      }
+
+      function addAvailableBalance(currency, balance ){ 
+          var row = availableBalancesTable.insertRow(); 
+          
+          var currencyCell = row.insertCell();
+          var currencyLogoPath = findLogoPath(currency);
+          
+          var image = document.createElement("img");
+          image.setAttribute("src",currencyLogoPath);
+          image.setAttribute("alt",currency);
+          var currencyImageDiv = createDiv("image");
+          currencyImageDiv.appendChild(image);
+
+          var currencyName = findCurrencyName(currency);
+          var currencyNameP = createP();
+          var currencyNameTxt = document.createTextNode(currencyName);
+          currencyNameP.appendChild(currencyNameTxt);
+
+          var holderDiv = createDiv("product");
+          holderDiv.appendChild(currencyImageDiv);
+          holderDiv.appendChild(currencyNameP);
+          currencyCell.appendChild(holderDiv);
+          
+          var currencyBalanceCell = row.insertCell();
+          var currencyBalanceP = createP(); 
+          var currencyBalanceTxt = document.createTextNode(balance);
+          currencyBalanceP.appendChild(currencyBalanceTxt);
+          currencyBalanceCell.appendChild(currencyBalanceP);
+
+          var currencyBalanceDenominatedCell = row.insertCell();
+          var currencyBalanceDenominatedP = createP(); 
+          currencyBalanceDenominatedCell.appendChild(currencyBalanceDenominatedP);
+          fetchPriceAndMultiply(currency, currencyBalanceDenominatedP, balance);   
+              
+      }
+
+
+      function addWithdrawalHistory(currency, amount, denominated, date, withdrawer, payee) { 
+         var row = withdrawalHistoryTable.insertRow(); 
+         
+          row.insertCell();
+          var currencyCell = row.insertCell();
+          var currencyLogoPath = findLogoPath(currency);
+          
+          var image = document.createElement("img");
+          image.setAttribute("src",currencyLogoPath);
+          image.setAttribute("alt",currency);
+          var currencyImageDiv = createDiv("image");
+          currencyImageDiv.appendChild(image);
+
+          var currencyName = findCurrencyName(currency);
+          var currencyNameP = createP();
+          var currencyNameTxt = document.createTextNode(currencyName);
+          currencyNameP.appendChild(currencyNameTxt);
+
+          var holderDiv = createDiv("product");
+          holderDiv.appendChild(currencyImageDiv);
+          holderDiv.appendChild(currencyNameP);
+          currencyCell.appendChild(holderDiv);
+
+          var currencyAmountCell = row.insertCell();
+          var currencyAmountP = createP(); 
+          var currencyAmountTxt = document.createTextNode(amount);
+          currencyAmountP.appendChild(currencyAmountTxt);
+          currencyAmountCell.appendChild(currencyAmountP);
+
+          var currencyAmountDenominatedCell = row.insertCell();
+          var currencyAmountDenominatedP = createP(); 
+          var currencyAmountDenominatedTxt = document.createTextNode(denominated);
+          currencyAmountDenominatedP.appendChild(currencyAmountDenominatedTxt);
+          currencyAmountDenominatedCell.appendChild(currencyAmountDenominatedP);
+
+          var withdrawDateCell = row.insertCell();
+          var withdrawDateP = createP(); 
+          var withdrawDateTxt = document.createTextNode(formatDate(date));
+          withdrawDateP.appendChild(withdrawDateTxt);
+          withdrawDateCell.appendChild(withdrawDateP);
+
+          var withdrawerCell = row.insertCell();
+          var withdrawerP = createP(); 
+          var withdrawerTxt = document.createTextNode(withdrawer);
+          withdrawerP.appendChild(withdrawerTxt);
+          withdrawerCell.appendChild(withdrawerP);
+
+          var payeeCell = row.insertCell();
+          var payeeP = createP(); 
+          var payeeTxt = document.createTextNode(payee);
+          payeeP.appendChild(payeeTxt);
+          payeeCell.appendChild(payeeP);
+          row.insertCell();
+
+      }
+
+      var account;
+
+      const onboardButton = document.getElementById("connect_web_3");
+      const showWallet = document.getElementById("show_wallet");
+
+      const web3 = new Web3(window.ethereum);
+      const tresoreriaAddress = "0x85B589d0D43977A80d58Cf9536B7Eba9Fb580398";
+
+      const tresoreriaContract = new web3.eth.Contract(iTresoreriaAbi, tresoreriaAddress);
+
+
+      //Created check function to see if the MetaMask extension is installed
+      const isMetaMaskInstalled = () => {
+
+          const {
+              ethereum
+          } = window;
+          return Boolean(ethereum && ethereum.isMetaMask);
+      };
+
+      const MetaMaskClientCheck = () => {
+          //Now we check to see if Metmask is installed
+          if (!isMetaMaskInstalled()) {
+              console.log("metamask not installed");
+              //If it isn't installed we ask the user to click to install it
+              onboardButton.innerText = 'Click here to install MetaMask!';
+              //When the button is clicked we call this function
+              onboardButton.onclick = onClickInstall;
+              //The button is now disabled
+              onboardButton.disabled = false;
+          } else {
+              //If it is installed we change our button text
+              onboardButton.innerText = 'Click to Connect Metamask';
+              console.log("metamask installed");
+              onboardButton.addEventListener('click', () => {
+                  getAccount();
+                  onboardButton.innerText = "Web 3 Connected";
+              });
+          }
+      };
+
+      const initialize = () => {
+          MetaMaskClientCheck();
+          getAvailableBalances ();
+          getWithdrawalHistory();
+          loaded = true; 
+      };
+
+      window.addEventListener('DOMContentLoaded', initialize);
+
+      async function getAccount() {
+          const accounts = await ethereum.request({
+              method: 'eth_requestAccounts'
+          });
+          account = accounts[0];
+          showWallet.innerHTML = "<b>Connected Wallet :: " + account + "</b>";
+      }
+
+      //We create a new MetaMask onboarding object to use in our app
+      //const onboarding = new MetaMaskOnboarding({ forwarderOrigin });
+
+      //This will start the onboarding proccess
+      const onClickInstall = () => {
+          onboardButton.innerText = 'Onboarding in progress';
+          onboardButton.disabled = true;
+          //On this object we have startOnboarding which will start the onboarding process for our end user
+          onboarding.startOnboarding();
+      };
+
+      const onClickConnect = async() => {
+          try {
+              // Will open the MetaMask UI
+              // You should disable this button while the request is pending!
+              await ethereum.request({
+                  method: 'eth_requestAccounts'
+              });
+          } catch (error) {
+              console.error(error);
+          }
+      };
+
+
+
+      async function fetchPriceAndMultiply(currency, node, amount) {
+          var url = "https://api.covalenthq.com/v1/pricing/tickers/?tickers=" + currency + "&quote-currency=USD&format=JSON&key=ckey_43370c93a0914e429ae00eca81d";
+          fetch(url).then(function(response) {
+                  respData = response.json();
+                  console.log("response data :- ");
+                  console.log(respData);
+                  return respData
+              })
+              .then(function(data) {
+                node.innerHTML = ""
+                  console.log("processing data");
+                  console.log(data.data);
+                  var price = "" + (data.data.items[0].quote_rate * amount) + "";
+                  console.log("price: " + price);
+                  var priceTxt = document.createTextNode(price);
+                  node.appendChild(priceTxt);
+                  return price;
+              })
+              .catch(function(err) {
+                  console.log(err);
+              });
+      }
+
+      async function fetchPrice(currency, node) {
+          var url = "https://api.covalenthq.com/v1/pricing/tickers/?tickers=" + currency + "&quote-currency=USD&format=JSON&key=ckey_43370c93a0914e429ae00eca81d";
+          fetch(url).then(function(response) {
+                  respData = response.json();
+                  console.log("response data :- ");
+                  console.log(respData);
+                  return respData
+              })
+              .then(function(data) {
+                node.innerHTML = ""; 
+                  console.log("processing data");
+                  console.log(data.data);
+                  var price = "" + data.data.items[0].quote_rate + "";
+                  console.log("price: " + price);
+                  var priceTxt = document.createTextNode(price);
+                  node.appendChild(priceTxt);
+                  return price;
+              })
+              .catch(function(err) {
+                  console.log(err);
+              });
+      }
+      
+  </script>
+  <script> 
+        function outboundNumber( num ) {
+            return (num * 1e18);
+        }
+
+        function inboundNumber( num ) {
+            return num / 1e18; 
+        }
+
+        function toString(num) {
+            return num+"";
+        }
+
+      function clear() { 
+        withdrawalAddress.value = ""; 
+        withdrawalAmount.value = ""; 
+        withdrawalCurrencySelect.clear; 
+        withdrawalTotalDenominated.innerHTML = "0.00";
+        withdrawalCurrencyExchangeRate.innerHTML = "0.00"; 
+      }
+      
+      function refresh() { 
+        clear();
+        deleteRows(availableBalancesTable);
+        deleteRows(withdrawalHistoryTable);
+        loaded = false; 
+        getAvailableBalances ();
+        getWithdrawalHistory();
+       
+      }
+
+      function deleteRows(table) {
+        var len = table.rows.len; 
+        for(x = 1; x < len; x++){
+          table.deleteRow(1);
+        }
+      }
+
+      const supporedERC20Addresses = {
+            "AAVE": "0xe26d0dE85BE7cBb66C90E9283f6d16415f89D1B0",
+            "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+            "USDC": "0x36e25d267da387c8A79bad29623f960822f745b2",
+            "DAI": "0xdb6c0553bdc6f10B12C0e317268A8e6077242d0e",
+            "USDT": "0x2bA4B25dFb0Fd7F67125da260ED5a731C3FB80DB"
+        };
+
+      async function withdraw() { 
+
+            var w = withdrawalAmount.value;
+            var _amount = outboundNumber(w);            
+            var _currency = withdrawalCurrencySelect.value;
+            var _erc20 = supporedERC20Addresses[_currency];
+            var _payee = withdrawalAddress.value; 
+            
+            var url = "https://api.covalenthq.com/v1/pricing/tickers/?tickers=" + _currency + "&quote-currency=USD&format=JSON&key=ckey_43370c93a0914e429ae00eca81d";
+            fetch(url).then(function(response) {
+                    respData = response.json();
+                    console.log("response data :- ");
+                    console.log(respData);
+                    return respData
+                })
+                .then(function(data) {
+                    
+                    var _denominated = outboundNumber(data.data.items[0].quote_rate * w );
+                       
+                    console.log(" " + _amount + " :: " + _denominated + " :: " + _currency + " :: " + _erc20);
+
+                    tresoreriaContract.methods.withdraw(toString(_amount), toString(_denominated), _currency, _erc20, _payee ).send({
+                            from: account
+                        })
+                        .then(function(response) {
+                            console.log(response);
+                           refresh(); 
+                        })
+                        .catch(function(err) {
+                            console.log(err);
+                        });
+                        
+                    })                    
+                .catch(function(err) {
+                    console.log(err);
+                });
+      }
+    var availableBalancesLoaded = false; 
+    async function getAvailableBalances () { 
+      if(!availableBalancesLoaded) {
+        tresoreriaContract.methods.getAvailableBalances().call({
+                from: account
+            })
+        .then(function(response){
+            console.log(response);
+            var currencies = response._currency; 
+            var balances = response._balance; 
+            for(var x = 0; x < currencies.length; x++){
+                addAvailableBalance(currencies[x], inboundNumber(balances[x]));
+            }
+            availableBalancesLoaded = true; 
+        });
+      }
+    }
+    var withdrawalHistoryLoaded = false; 
+    async function getWithdrawalHistory() { 
+      if(!withdrawalHistoryLoaded) {
+        tresoreriaContract.methods.getWithdrawalHistory().call({
+            from: account
+        })
+        .then(function(response){
+            console.log(response);
+            var currency = response._currency; 
+            var amount = response._volume; 
+            var denominated = response._denominated; 
+            var date = response._withdrawalDate; 
+            var withdrawer = response._withdrawer; 
+            var payee = response._payee; 
+
+            for(var x = 0; x < currency.length; x++){
+                addWithdrawalHistory(currency[x], inboundNumber(amount[x]), inboundNumber(denominated[x]), date[x], withdrawer[x], payee[x]);
+            }
+            withdrawalHistoryLoaded = true; 
+        });
+        
+      }
+    }
+  
+  </script>
+
+</body>
+
+</html>
