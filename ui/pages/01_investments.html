@@ -825,7 +825,7 @@
         }
 
         function findMarketLogoPath(market) {
-            return "../assets/images/currencies/" + market + ".png";
+            return "../assets/images/currencies/" + market.toLowerCase() + ".png";
         }
 
         function addLatestDeal(protocol, market, aprapy, isApy, tvl) {
