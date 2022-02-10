@@ -6,3 +6,10 @@ This is the repository for the Tresoreria.
 Safe transparency in Treasury. It is a difficult topic in DAOs or for any Web3 project. The goal of this project is to develop a Web3 treasury management system with a dashboard that enables DAOs to be open about where they make investments and how well their investments perform. The idea is to begin a public good that encourages better governance, 
 and sound risk taking within DAOs using transparently acquired Covalent data. 
 
+
+|   ITEM  | DESCRIPTION                                        |
+|-----|-----------------------------------------|
+|DEMO:| https://crimson-bonus-4129.on.fleek.co/ | 
+|EVM NETWORK: | Rinkeby |
+|SUPPORTED WALLETS: | Metamask | 
+|VIDEO : | https://youtu.be/_KzR--PY7w4 _| 
